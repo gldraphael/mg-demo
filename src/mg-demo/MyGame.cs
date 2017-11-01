@@ -11,12 +11,12 @@ namespace MG.Demo
 	/// <summary>
 	/// This is the main type for your game.
 	/// </summary>
-	public class Game1 : Game
+	public class MyGame : Game
 	{
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 
-		public Game1()
+		public MyGame()
 		{
 			graphics = new GraphicsDeviceManager (this);
 		}
