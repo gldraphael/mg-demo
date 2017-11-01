@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 
-namespace mg-demo
+namespace MG.Demo
 {
 	/// <summary>
 	/// This is the main type for your game.

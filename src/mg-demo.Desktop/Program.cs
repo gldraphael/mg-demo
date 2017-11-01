@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 #endregion
 
-namespace mg-demo
+namespace MG.Demo
 {
 	public static class Program
 	{
