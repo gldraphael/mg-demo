@@ -2,9 +2,10 @@
 using System;
 using MG.Demo.Managers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace MG.Demo.Screens.Base
+namespace MG.Demo.Components
 {
 	/// <summary>
 	/// Enum describes the screen transition state.
@@ -278,8 +279,7 @@ namespace MG.Demo.Screens.Base
 		/// <summary>
 		/// This is called when the screen should draw itself.
 		/// </summary>
-		public abstract void Draw(GameTime gameTime);
-
+		public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 
 		#endregion
 

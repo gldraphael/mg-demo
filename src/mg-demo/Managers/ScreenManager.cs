@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MG.Demo.Screens.Base;
+using MG.Demo.Components;
 #endregion
 
 namespace MG.Demo.Managers
@@ -34,26 +34,10 @@ namespace MG.Demo.Managers
 		Texture2D blankTexture;
 		Rectangle titleSafeArea;
 
-		// bool traceEnabled;
-
 		#endregion
 
 
 		#region Properties
-
-		/// <summary>
-		/// Expose access to our Game instance (this is protected in the
-		/// default GameComponent, but we want to make it public).
-		/// </summary>
-		// new public Game Game => Game;
-
-
-		/// <summary>
-		/// Expose access to our graphics device (this is protected in the
-		/// default DrawableGameComponent, but we want to make it public).
-		/// </summary>
-		// new public GraphicsDevice GraphicsDevice => GraphicsDevice;
-
 
 		/// <summary>
 		/// A content manager used to load data that is shared between multiple
@@ -67,7 +51,8 @@ namespace MG.Demo.Managers
 		/// A default SpriteBatch shared by all the screens. This saves
 		/// each screen having to bother creating their own local instance.
 		/// </summary>
-		public SpriteBatch SpriteBatch => spriteBatch;
+		public SpriteBatch SpriteBatch => spriteBatch ?? 
+					(spriteBatch = Game.Services.GetService<SpriteBatch>());
 
 
 		/// <summary>
@@ -102,10 +87,7 @@ namespace MG.Demo.Managers
 		public ScreenManager(Game game)
 			: base(game)
 		{
-
-			graphicsDeviceService = (IGraphicsDeviceService)game.Services.GetService(
-														typeof(IGraphicsDeviceService));
-
+			graphicsDeviceService = game.Services.GetService<IGraphicsDeviceService>();
 			if (graphicsDeviceService == null)
 				throw new InvalidOperationException("No graphics device service.");
 		}
@@ -249,7 +231,7 @@ namespace MG.Demo.Managers
 				if (screen.ScreenState == ScreenState.Hidden)
 					continue;
 
-				screen.Draw(gameTime);
+				screen.Draw(SpriteBatch, gameTime);
 			}
 		}
 
@@ -332,14 +314,11 @@ namespace MG.Demo.Managers
 			Viewport viewport = GraphicsDevice.Viewport;
 
 			spriteBatch.Begin();
-
 			spriteBatch.Draw(blankTexture,
 							 new Rectangle(0, 0, viewport.Width, viewport.Height),
 							 new Color(0, 0, 0, alpha));
-			
 			spriteBatch.End();
 		}
-
 
 		#endregion
 	}

@@ -1,6 +1,6 @@
 ﻿using System;
+using MG.Demo.Components;
 using MG.Demo.Managers;
-using MG.Demo.Screens.Base;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,9 +20,6 @@ namespace MG.Demo.Screens
 	///   next screen, which may take a long time to load its data. The loading
 	///   screen will be the only thing displayed while this load is taking place.
 	/// </summary>
-	/// <remarks>
-	/// This public class is similar to one in the GameStateManagement sample.
-	/// </remarks>
 	public class LoadingScreen : GameScreen
 	{
 		#region Fields
@@ -94,7 +91,7 @@ namespace MG.Demo.Screens
 		/// <summary>
 		/// Draws the loading screen.
 		/// </summary>
-		public override void Draw(GameTime gameTime)
+		public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
 		{
 			// If we are the only active screen, that means all the previous screens
 			// must have finished transitioning off. We check for this in the Draw
@@ -126,12 +123,12 @@ namespace MG.Demo.Screens
 				Color color = new Color(255, 255, 255, (int)TransitionAlpha);
 
 				// Draw the text.
-				ScreenManager.SpriteBatch.Begin();
+				spriteBatch.Begin();
 
-				ScreenManager.SpriteBatch.DrawString(ScreenManager.Font, message,
+				spriteBatch.DrawString(ScreenManager.Font, message,
 													 textPosition, color);
 
-				ScreenManager.SpriteBatch.End();
+				spriteBatch.End();
 			}
 		}
 

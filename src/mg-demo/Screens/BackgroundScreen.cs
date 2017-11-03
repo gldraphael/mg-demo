@@ -1,5 +1,5 @@
 ﻿using System;
-using MG.Demo.Screens.Base;
+using MG.Demo.Components;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -80,9 +80,8 @@ namespace MG.Demo.Screens
 		/// <summary>
 		/// Draws the background screen.
 		/// </summary>
-		public override void Draw(GameTime gameTime)
+		public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
 		{
-			SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 			Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 			Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
