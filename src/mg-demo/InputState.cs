@@ -11,18 +11,8 @@ namespace MG.Demo
 	/// </summary>
 	public class InputState
 	{
-		#region Fields
-
-		public KeyboardState CurrentKeyboardState;
-		public GamePadState CurrentGamePadState;
-
-		public KeyboardState LastKeyboardState;
-		public GamePadState LastGamePadState;
-
-		#endregion
-
-		#region Properties
-
+		public InputStateProperties Current { get; set; } = new InputStateProperties();
+		public InputStateProperties Previous { get; set; } = new InputStateProperties();
 
 		/// <summary>
 		/// Checks for a "menu up" input action (on either keyboard or gamepad).
@@ -32,10 +22,10 @@ namespace MG.Demo
 			get
 			{
 				return IsNewKeyPress(Keys.Up) ||
-					   (CurrentGamePadState.DPad.Up == ButtonState.Pressed &&
-						LastGamePadState.DPad.Up == ButtonState.Released) ||
-					   (CurrentGamePadState.ThumbSticks.Left.Y > 0 &&
-						LastGamePadState.ThumbSticks.Left.Y <= 0);
+					   (Current.GamePadState.DPad.Up == ButtonState.Pressed &&
+						Previous.GamePadState.DPad.Up == ButtonState.Released) ||
+					   (Current.GamePadState.ThumbSticks.Left.Y > 0 &&
+						Previous.GamePadState.ThumbSticks.Left.Y <= 0);
 			}
 		}
 
@@ -48,10 +38,10 @@ namespace MG.Demo
 			get
 			{
 				return IsNewKeyPress(Keys.Down) ||
-					   (CurrentGamePadState.DPad.Down == ButtonState.Pressed &&
-						LastGamePadState.DPad.Down == ButtonState.Released) ||
-					   (CurrentGamePadState.ThumbSticks.Left.Y < 0 &&
-						LastGamePadState.ThumbSticks.Left.Y >= 0);
+					   (Current.GamePadState.DPad.Down == ButtonState.Pressed &&
+						Previous.GamePadState.DPad.Down == ButtonState.Released) ||
+					   (Current.GamePadState.ThumbSticks.Left.Y < 0 &&
+						Previous.GamePadState.ThumbSticks.Left.Y >= 0);
 			}
 		}
 
@@ -65,10 +55,10 @@ namespace MG.Demo
 			{
 				return IsNewKeyPress(Keys.Space) ||
 					   IsNewKeyPress(Keys.Enter) ||
-					   (CurrentGamePadState.Buttons.A == ButtonState.Pressed &&
-						LastGamePadState.Buttons.A == ButtonState.Released) ||
-					   (CurrentGamePadState.Buttons.Start == ButtonState.Pressed &&
-						LastGamePadState.Buttons.Start == ButtonState.Released);
+					   (Current.GamePadState.Buttons.A == ButtonState.Pressed &&
+						Previous.GamePadState.Buttons.A == ButtonState.Released) ||
+					   (Current.GamePadState.Buttons.Start == ButtonState.Pressed &&
+						Previous.GamePadState.Buttons.Start == ButtonState.Released);
 			}
 		}
 
@@ -81,10 +71,10 @@ namespace MG.Demo
 			get
 			{
 				return IsNewKeyPress(Keys.Escape) ||
-					   (CurrentGamePadState.Buttons.B == ButtonState.Pressed &&
-						LastGamePadState.Buttons.B == ButtonState.Released) ||
-					   (CurrentGamePadState.Buttons.Back == ButtonState.Pressed &&
-						LastGamePadState.Buttons.Back == ButtonState.Released);
+					   (Current.GamePadState.Buttons.B == ButtonState.Pressed &&
+						Previous.GamePadState.Buttons.B == ButtonState.Released) ||
+					   (Current.GamePadState.Buttons.Back == ButtonState.Pressed &&
+						Previous.GamePadState.Buttons.Back == ButtonState.Released);
 			}
 		}
 
@@ -97,10 +87,10 @@ namespace MG.Demo
 			get
 			{
 				return IsNewKeyPress(Keys.Escape) ||
-					   (CurrentGamePadState.Buttons.Back == ButtonState.Pressed &&
-						LastGamePadState.Buttons.Back == ButtonState.Released) ||
-					   (CurrentGamePadState.Buttons.Start == ButtonState.Pressed &&
-						LastGamePadState.Buttons.Start == ButtonState.Released);
+					   (Current.GamePadState.Buttons.Back == ButtonState.Pressed &&
+						Previous.GamePadState.Buttons.Back == ButtonState.Released) ||
+					   (Current.GamePadState.Buttons.Start == ButtonState.Pressed &&
+						Previous.GamePadState.Buttons.Start == ButtonState.Released);
 			}
 		}
 
@@ -113,8 +103,8 @@ namespace MG.Demo
 			get
 			{
 				return IsNewKeyPress(Keys.Up) ||
-				   (CurrentGamePadState.Buttons.RightShoulder == ButtonState.Pressed &&
-					LastGamePadState.Buttons.RightShoulder == ButtonState.Released);
+				   (Current.GamePadState.Buttons.RightShoulder == ButtonState.Pressed &&
+					Previous.GamePadState.Buttons.RightShoulder == ButtonState.Released);
 			}
 		}
 
@@ -127,8 +117,8 @@ namespace MG.Demo
 			get
 			{
 				return IsNewKeyPress(Keys.Down) ||
-					(CurrentGamePadState.Buttons.LeftShoulder == ButtonState.Pressed &&
-					 LastGamePadState.Buttons.LeftShoulder == ButtonState.Released);
+					(Current.GamePadState.Buttons.LeftShoulder == ButtonState.Pressed &&
+					 Previous.GamePadState.Buttons.LeftShoulder == ButtonState.Released);
 			}
 		}
 
@@ -142,8 +132,8 @@ namespace MG.Demo
 			get
 			{
 				return IsNewKeyPress(Keys.Right) ||
-					(CurrentGamePadState.Triggers.Right >= 1f &&
-					 LastGamePadState.Triggers.Right < 1f);
+					(Current.GamePadState.Triggers.Right >= 1f &&
+					 Previous.GamePadState.Triggers.Right < 1f);
 			}
 		}
 
@@ -156,8 +146,8 @@ namespace MG.Demo
 			get
 			{
 				return IsNewKeyPress(Keys.Left) ||
-					(CurrentGamePadState.Triggers.Left >= 1f &&
-					 LastGamePadState.Triggers.Left < 1f);
+					(Current.GamePadState.Triggers.Left >= 1f &&
+					 Previous.GamePadState.Triggers.Left < 1f);
 			}
 		}
 
@@ -170,27 +160,24 @@ namespace MG.Demo
 			get
 			{
 				return IsNewKeyPress(Keys.X) ||
-					   (CurrentGamePadState.Buttons.X == ButtonState.Pressed &&
-						LastGamePadState.Buttons.X == ButtonState.Released);
+					   (Current.GamePadState.Buttons.X == ButtonState.Pressed &&
+						Previous.GamePadState.Buttons.X == ButtonState.Released);
 			}
 		}
 
-
-		#endregion
-
-		#region Methods
-
-
 		/// <summary>
-		/// Reads the latest state of the keyboard and gamepad.
+		/// Update the input state
 		/// </summary>
 		public void Update()
 		{
-			LastKeyboardState = CurrentKeyboardState;
-			LastGamePadState = CurrentGamePadState;
-
-			CurrentKeyboardState = Keyboard.GetState();
-			CurrentGamePadState = GamePad.GetState(PlayerIndex.One);
+			var newState = new InputStateProperties
+			{
+				MouseState = Mouse.GetState(),
+				KeyboardState = Keyboard.GetState(),
+				GamePadState = GamePad.GetState(PlayerIndex.One)
+			};
+			Previous = Current;
+			Current = newState;
 		}
 
 
@@ -199,11 +186,16 @@ namespace MG.Demo
 		/// </summary>
 		public bool IsNewKeyPress(Keys key)
 		{
-			return (CurrentKeyboardState.IsKeyDown(key) &&
-					LastKeyboardState.IsKeyUp(key));
+			return (Current.KeyboardState.IsKeyDown(key) &&
+					Previous.KeyboardState.IsKeyUp(key));
 		}
 
 
-		#endregion
+		public class InputStateProperties
+		{
+			public KeyboardState KeyboardState { get; set; }
+			public GamePadState GamePadState { get; set; }
+			public MouseState MouseState { get; set; }
+		}
 	}
 }
