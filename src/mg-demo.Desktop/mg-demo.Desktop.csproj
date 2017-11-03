@@ -45,6 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Content\fonts\menu-font.spritefont" />
+    <None Include="Content\textures\blank.png" />
+    <None Include="Content\background.bmp" />
+    <None Include="Content\fonts\ttt.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />

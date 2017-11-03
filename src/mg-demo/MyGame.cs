@@ -1,4 +1,6 @@
 using System;
+using MG.Demo.Managers;
+using MG.Demo.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,32 +16,26 @@ namespace MG.Demo
 	public class MyGame : Game
 	{
 		GraphicsDeviceManager graphics;
-		SpriteBatch spriteBatch;
+		ScreenManager screenManager;
 
 		public MyGame()
 		{
 			graphics = new GraphicsDeviceManager (this);
+			screenManager = new ScreenManager(this);
 		}
 
 		protected override void Initialize ()
 		{
-			base.Initialize ();
-		}
+			Content.RootDirectory = "Content";
+			Components.Add(screenManager);
+			screenManager.AddScreen(new BackgroundScreen());
 
-		protected override void LoadContent ()
-		{
-			// Create a new SpriteBatch, which can be used to draw textures.
-			spriteBatch = new SpriteBatch (GraphicsDevice);
+			base.Initialize();
 		}
 
 		protected override void Update (GameTime gameTime)
 		{
 			base.Update (gameTime);
-		}
-
-		protected override void Draw (GameTime gameTime)
-		{
-			base.Draw (gameTime);
 		}
 	}
 }
