@@ -25,9 +25,6 @@ namespace MG.Demo.Components
 	/// want to quit" message box, and the main game itself are all implemented
 	/// as screens.
 	/// </summary>
-	/// <remarks>
-	/// This public class is similar to one in the GameStateManagement sample.
-	/// </remarks>
 	public abstract class GameScreen
 	{
 		#region Properties
@@ -40,39 +37,21 @@ namespace MG.Demo.Components
 		/// popup, in which case screens underneath it do not need to bother
 		/// transitioning off.
 		/// </summary>
-		public bool IsPopup
-		{
-			get { return isPopup; }
-			protected set { isPopup = value; }
-		}
-
-		bool isPopup = false;
+		public bool IsPopup { get; protected set; } = false;
 
 
 		/// <summary>
 		/// Indicates how long the screen takes to
 		/// transition on when it is activated.
 		/// </summary>
-		public TimeSpan TransitionOnTime
-		{
-			get { return transitionOnTime; }
-			protected set { transitionOnTime = value; }
-		}
-
-		TimeSpan transitionOnTime = TimeSpan.Zero;
+		public TimeSpan TransitionOnTime { get; protected set; } = TimeSpan.Zero;
 
 
 		/// <summary>
 		/// Indicates how long the screen takes to
 		/// transition off when it is deactivated.
 		/// </summary>
-		public TimeSpan TransitionOffTime
-		{
-			get { return transitionOffTime; }
-			protected set { transitionOffTime = value; }
-		}
-
-		TimeSpan transitionOffTime = TimeSpan.Zero;
+		public TimeSpan TransitionOffTime { get; protected set; } = TimeSpan.Zero;
 
 
 		/// <summary>
@@ -80,13 +59,7 @@ namespace MG.Demo.Components
 		/// from zero (fully active, no transition) to one (transitioned
 		/// fully off to nothing).
 		/// </summary>
-		public float TransitionPosition
-		{
-			get { return transitionPosition; }
-			protected set { transitionPosition = value; }
-		}
-
-		float transitionPosition = 1;
+		public float TransitionPosition { get; protected set; } = 1;
 
 
 		/// <summary>
@@ -94,22 +67,13 @@ namespace MG.Demo.Components
 		/// from 255 (fully active, no transition) to 0 (transitioned
 		/// fully off to nothing).
 		/// </summary>
-		public byte TransitionAlpha
-		{
-			get { return (byte)(255 - TransitionPosition * 255); }
-		}
+		public byte TransitionAlpha => (byte)(255 - TransitionPosition * 255);
 
 
 		/// <summary>
 		/// Gets the current screen transition state.
 		/// </summary>
-		public ScreenState ScreenState
-		{
-			get { return screenState; }
-			protected set { screenState = value; }
-		}
-
-		ScreenState screenState = ScreenState.TransitionOn;
+		public ScreenState ScreenState { get; protected set; } = ScreenState.TransitionOn;
 
 
 		/// <summary>
@@ -120,13 +84,7 @@ namespace MG.Demo.Components
 		/// if set, the screen will automatically remove itself as soon as the
 		/// transition finishes.
 		/// </summary>
-		public bool IsExiting
-		{
-			get { return isExiting; }
-			protected set { isExiting = value; }
-		}
-
-		bool isExiting = false;
+		public bool IsExiting { get; protected set; } = false;
 
 
 		/// <summary>
@@ -137,8 +95,8 @@ namespace MG.Demo.Components
 			get
 			{
 				return !otherScreenHasFocus &&
-					   (screenState == ScreenState.TransitionOn ||
-						screenState == ScreenState.Active);
+					   (ScreenState == ScreenState.TransitionOn ||
+						ScreenState == ScreenState.Active);
 			}
 		}
 
@@ -189,45 +147,45 @@ namespace MG.Demo.Components
 		{
 			this.otherScreenHasFocus = otherScreenHasFocus;
 
-			if (isExiting)
+			if (IsExiting)
 			{
 				// If the screen is going away to die, it should transition off.
-				screenState = ScreenState.TransitionOff;
+				ScreenState = ScreenState.TransitionOff;
 
-				if (!UpdateTransition(gameTime, transitionOffTime, 1))
+				if (!UpdateTransition(gameTime, TransitionOffTime, 1))
 				{
 					// When the transition finishes, remove the screen.
 					ScreenManager.RemoveScreen(this);
 
-					isExiting = false;
+					IsExiting = false;
 				}
 			}
 			else if (coveredByOtherScreen)
 			{
 				// If the screen is covered by another, it should transition off.
-				if (UpdateTransition(gameTime, transitionOffTime, 1))
+				if (UpdateTransition(gameTime, TransitionOffTime, 1))
 				{
 					// Still busy transitioning.
-					screenState = ScreenState.TransitionOff;
+					ScreenState = ScreenState.TransitionOff;
 				}
 				else
 				{
 					// Transition finished!
-					screenState = ScreenState.Hidden;
+					ScreenState = ScreenState.Hidden;
 				}
 			}
 			else
 			{
 				// Otherwise the screen should transition on and become active.
-				if (UpdateTransition(gameTime, transitionOnTime, -1))
+				if (UpdateTransition(gameTime, TransitionOnTime, -1))
 				{
 					// Still busy transitioning.
-					screenState = ScreenState.TransitionOn;
+					ScreenState = ScreenState.TransitionOn;
 				}
 				else
 				{
 					// Transition finished!
-					screenState = ScreenState.Active;
+					ScreenState = ScreenState.Active;
 				}
 			}
 		}
@@ -248,12 +206,12 @@ namespace MG.Demo.Components
 										  time.TotalMilliseconds);
 
 			// Update the transition position.
-			transitionPosition += transitionDelta * direction;
+			TransitionPosition += transitionDelta * direction;
 
 			// Did we reach the end of the transition?
-			if ((transitionPosition <= 0) || (transitionPosition >= 1))
+			if ((TransitionPosition <= 0) || (TransitionPosition >= 1))
 			{
-				transitionPosition = MathHelper.Clamp(transitionPosition, 0, 1);
+				TransitionPosition = MathHelper.Clamp(TransitionPosition, 0, 1);
 				return false;
 			}
 
@@ -301,7 +259,7 @@ namespace MG.Demo.Components
 			else
 			{
 				// Otherwise flag that it should transition off and then exit.
-				isExiting = true;
+				IsExiting = true;
 			}
 		}
 
