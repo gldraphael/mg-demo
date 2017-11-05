@@ -96,63 +96,6 @@ namespace MG.Demo
 
 
 		/// <summary>
-		/// Checks for a positive "ship color change" input action
-		/// </summary>
-		public bool ShipColorChangeUp
-		{
-			get
-			{
-				return IsNewKeyPress(Keys.Up) ||
-				   (Current.GamePadState.Buttons.RightShoulder == ButtonState.Pressed &&
-					Previous.GamePadState.Buttons.RightShoulder == ButtonState.Released);
-			}
-		}
-
-
-		/// <summary>
-		/// Checks for a negative "ship color change" input action.
-		/// </summary>
-		public bool ShipColorChangeDown
-		{
-			get
-			{
-				return IsNewKeyPress(Keys.Down) ||
-					(Current.GamePadState.Buttons.LeftShoulder == ButtonState.Pressed &&
-					 Previous.GamePadState.Buttons.LeftShoulder == ButtonState.Released);
-			}
-		}
-
-
-
-		/// <summary>
-		/// Checks for a positive "ship model change" input action.
-		/// </summary>
-		public bool ShipModelChangeUp
-		{
-			get
-			{
-				return IsNewKeyPress(Keys.Right) ||
-					(Current.GamePadState.Triggers.Right >= 1f &&
-					 Previous.GamePadState.Triggers.Right < 1f);
-			}
-		}
-
-
-		/// <summary>
-		/// Checks for a negative "ship model change" input action.
-		/// </summary>
-		public bool ShipModelChangeDown
-		{
-			get
-			{
-				return IsNewKeyPress(Keys.Left) ||
-					(Current.GamePadState.Triggers.Left >= 1f &&
-					 Previous.GamePadState.Triggers.Left < 1f);
-			}
-		}
-
-
-		/// <summary>
 		/// Checks for a "mark ready" input action (on either keyboard or gamepad).
 		/// </summary>
 		public bool MarkReady
